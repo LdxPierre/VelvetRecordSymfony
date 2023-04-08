@@ -62,9 +62,9 @@ class AppFixtures extends Fixture
         $manager->persist($disc1);
 
         $disc2 = new Disc();
-        $disc2->setTitle('Songs of the Deaf');
+        $disc2->setTitle('Songs for the Deaf');
         $disc2->setYear('2002');
-        $disc2->setPicture('Songs of the Deaf.jpeg');
+        $disc2->setPicture('Songs for the Deaf.jpeg');
         $disc2->setLabel('Interscope Records');
         $disc2->setGenre('Rock/Stoner');
         $disc2->setPrice(1299);
@@ -163,7 +163,7 @@ class AppFixtures extends Fixture
         $disc12 = new Disc();
         $disc12->setTitle('Exile on main street');
         $disc12->setYear('1972');
-        $disc12->setPicture('Lodon Calling.jpeg');
+        $disc12->setPicture('Exile on main street.jpeg');
         $disc12->setLabel('Rolling Stones Records');
         $disc12->setGenre('Blues Rock, Classique Rock');
         $disc12->setPrice(3300);
@@ -173,7 +173,7 @@ class AppFixtures extends Fixture
         $disc13 = new Disc();
         $disc13->setTitle('London Calling');
         $disc13->setYear('1971');
-        $disc13->setPicture('Lodon Calling.jpeg');
+        $disc13->setPicture('London Calling.jpeg');
         $disc13->setLabel('CBS');
         $disc13->setGenre('Punk, New Wave');
         $disc13->setPrice(3300);
@@ -193,7 +193,7 @@ class AppFixtures extends Fixture
         $disc15 = new Disc();
         $disc15->setTitle('Labotory of Sound');
         $disc15->setYear('1995');
-        $disc15->setPicture('Labotory of Sound');
+        $disc15->setPicture('Laboratory of sound.jpeg');
         $disc15->setLabel('Rebel Rec.');
         $disc15->setGenre('Rock');
         $disc15->setPrice(3300);
