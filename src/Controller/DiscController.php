@@ -91,8 +91,7 @@ class DiscController extends AbstractController
             try {
                 // Supprime l'ancienne image
                 $filesystem = new FileSystem();
-                $fileToRemove = $disc->getPicture();
-                $filesystem->remove($this->getParameter('discsPicture_directory').'/'.$fileToRemove);
+                $filesystem->remove($this->getParameter('discsPicture_directory').'/'.$disc->getPicture());
                 // Télécharge la nouvelle image
                 $pictureFile->move(
                     $this->getParameter('discsPicture_directory'),
@@ -120,6 +119,10 @@ class DiscController extends AbstractController
     public function delete(Request $request, Disc $disc, DiscRepository $discRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$disc->getId(), $request->request->get('_token'))) {
+            //supprime l'ancienne image
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getParameter('discsPicture_directory').'/'.$disc->getPicture());
+
             $discRepository->remove($disc, true);
         }
 

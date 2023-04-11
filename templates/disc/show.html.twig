@@ -19,11 +19,9 @@
         </ul>
         <div class="col-md-2 d-flex flex-column gap-2">
             <a class='btn btn-primary' href="{{ path('app_disc_edit', {'id': disc.id}) }}">Modifier</a>
-            <button class="btn btn-danger" type='button' data-bs-toggle='modal' data-bs-target='#deleteModal'>
-                Supprimer
-            </button>
+            <button class="col-12 btn btn-danger" type='button' data-bs-toggle='modal' data-bs-target='#deleteModal'>Supprimer</button>
         </div>
-        
+
         {# deleteModal #}
         <div class="modal fade" id="deleteModal" tabindex='-1' aria-labelledby='deleteModalLabel' aria-hidden='true'>
             <div class="modal-dialog">
@@ -42,8 +40,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
 {% endblock %}
