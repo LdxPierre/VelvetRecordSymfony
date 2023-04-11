@@ -1,35 +1,38 @@
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}})}}
 
 <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-2 gx-md-4 flex-wrap'>
-    <div class="col">
-        {{form_row(form.title, {'label': 'Titre'})}}
-    </div>
-    <div class="col">
-        {{form_row(form.artist, {'label': 'Artiste'})}}
-    </div>
-    <div class="col">
-        {{form_row(form.label)}}
-    </div>
-    <div class="col">
-        {{form_row(form.year, {'label':'Année'})}}
-    </div>
-    <div class="col">
-        {{form_row(form.genre)}}
-    </div>
-    <div class="col">
-        {{form_row(form.price, {'label':'Prix'})}}
-    </div>
-    <div class="col">
-        {{form_row(form.picture2, {'label': 'Jaquette'})}}
-    </div>
+	<div class="col">
+		{{form_row(form.title, {'label': 'Titre'})}}
+	</div>
+	<div class="col">
+		{{form_row(form.artist, {'label': 'Artiste'})}}
+	</div>
+	<div class="col">
+		{{form_row(form.label)}}
+	</div>
+	<div class="col">
+		{{form_row(form.year, {'label':'Année'})}}
+	</div>
+	<div class="col">
+		{{form_row(form.genre)}}
+	</div>
+	<div class="col">
+		{{form_row(form.price, {'label':'Prix'})}}
+	</div>
+	<div class="col">
+		{{form_row(form.picture2, {'label': 'Jaquette'})}}
+	</div>
 </div>
 
 <div class='col-12 col-md-6 col-lg-3 mb-4'>
-    <img class='img-fluid jaquette' src="{{asset('images/discs/')}}{{disc.picture}}" alt="{{disc.title}}">
+	<img class='img-fluid jaquette' src="{{asset('images/discs/')}}{{disc.picture}}" alt="{{disc.title}}">
 </div>
 
 <div class="d-flex gap-2">
-    <button class="btn btn-success">{{ button_label|default('Créer le disque') }}</button>
+	{%if disc.id %}
+		<button class="btn btn-danger" type='button' data-bs-toggle='modal' data-bs-target='#deleteModal'>Supprimer</button>
+	{% endif %}
+	<button class="btn btn-success">{{ button_label|default('Créer le disque') }}</button>
 </div>
 
 {{ form_end(form) }}
