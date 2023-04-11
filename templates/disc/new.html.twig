@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Disc{% endblock %}
+{% block title %}Nouveau disque{% endblock %}
 
 {% block body %}
-    <h1>Create new Disc</h1>
+    <a class='mb-4 btn btn-primary' href="{{ path('app_disc_index') }}">Retour</a>
+    <h1>Créer un nouveau disque</h1>
 
     {{ include('disc/_form.html.twig') }}
 
-    <a href="{{ path('app_disc_index') }}">back to list</a>
 {% endblock %}

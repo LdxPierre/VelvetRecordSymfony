@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Disc;
 use App\Form\DiscType;
 use App\Repository\DiscRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/disc')]
 class DiscController extends AbstractController
@@ -22,13 +25,35 @@ class DiscController extends AbstractController
     }
 
     #[Route('/new', name: 'app_disc_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, DiscRepository $discRepository): Response
+    public function new(Request $request, DiscRepository $discRepository, SluggerInterface $slugger): Response
     {
         $disc = new Disc();
         $form = $this->createForm(DiscType::class, $disc);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // récupère les données du champ image
+            $pictureFile = $form->get('picture2')->getData();
+
+            if($pictureFile) {
+                // Assure un nom 'safe' pour l'image + id unique
+                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
+
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('discsPicture_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    echo $e;
+                }
+
+                $disc->setPicture($newFilename);
+            }
+
             $discRepository->save($disc, true);
 
             return $this->redirectToRoute('app_disc_index', [], Response::HTTP_SEE_OTHER);
@@ -40,6 +65,7 @@ class DiscController extends AbstractController
         ]);
     }
 
+    
     #[Route('/{id}', name: 'app_disc_show', methods: ['GET'])]
     public function show(Disc $disc): Response
     {
@@ -49,12 +75,36 @@ class DiscController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_disc_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Disc $disc, DiscRepository $discRepository): Response
+    public function edit(Request $request, Disc $disc, DiscRepository $discRepository, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(DiscType::class, $disc);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $pictureFile = $form->get('picture2')->getData();
+
+            if ($pictureFile) {
+                $originalFilename = pathinfo($pictureFile->getClientOriginalName(),PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
+            
+            try {
+                // Supprime l'ancienne image
+                $filesystem = new FileSystem();
+                $fileToRemove = $disc->getPicture();
+                $filesystem->remove($this->getParameter('discsPicture_directory').'/'.$fileToRemove);
+                // Télécharge la nouvelle image
+                $pictureFile->move(
+                    $this->getParameter('discsPicture_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // A définir
+            }
+            
+            $disc->setPicture($newFilename);
+        }
+            
             $discRepository->save($disc, true);
 
             return $this->redirectToRoute('app_disc_index', [], Response::HTTP_SEE_OTHER);
