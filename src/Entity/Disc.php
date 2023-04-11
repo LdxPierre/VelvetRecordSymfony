@@ -91,6 +91,9 @@ class Disc
     )]
     private ?int $price = null;
 
+    #[Assert\NotBlank(
+        message: 'Veuillez saisir un artiste.',
+    )]
     #[ORM\ManyToOne(inversedBy: 'discs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Artist $artist = null;
