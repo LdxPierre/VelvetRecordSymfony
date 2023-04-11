@@ -99,6 +99,7 @@ class AppFixtures extends Fixture
         $disc5->setGenre('Country Rock');
         $disc5->setPrice(2000);
         $disc5->setArtist($artist1);
+        $manager->persist($disc5);
 
         $disc6 = new Disc();
         $disc6->setTitle('Broken Arrow');

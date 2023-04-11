@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Disc index
+{% endblock %}
+
+{% block body %}
+	<h1 class='mb-4'>Disques</h1>
+	<section class="row row-cols-3 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-1 g-sm-2 g-md-4">
+		{% for disc in discs %}
+			<div class='col'>
+				<div class='card border-0'>
+					<img class='card-img-top' src="{{asset('images/discs/')}}{{disc.picture}}" alt={{disc.title}}>
+					<div class="card-body p-1">
+						<h6 class="m-0">{{disc.title}}</h6>
+						<p class='fw-light m-0'>{{disc.artist.name}}</p>
+						<a class='stretched-link' href="{{ path('app_disc_show', {id: disc.id})}}"></a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</section>
+{% endblock %}
