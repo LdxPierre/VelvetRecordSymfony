@@ -1,46 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Disc{% endblock %}
+{% block title %}{{disc.title}} | {{disc.artist.name}}{% endblock %}
 
 {% block body %}
-    <h1>Disc</h1>
+    <a class='btn btn-primary mb-4' href="{{ path('app_disc_index') }}">Retour</a>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ disc.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ disc.title }}</td>
-            </tr>
-            <tr>
-                <th>Year</th>
-                <td>{{ disc.year }}</td>
-            </tr>
-            <tr>
-                <th>Picture</th>
-                <td>{{ disc.picture }}</td>
-            </tr>
-            <tr>
-                <th>Label</th>
-                <td>{{ disc.label }}</td>
-            </tr>
-            <tr>
-                <th>Genre</th>
-                <td>{{ disc.genre }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ disc.price }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-4">
+        <div class="col-12 col-md-4 col-lg-3 d-flex justify-content-center">
+            <img class="img-fluid rounded" src="{{asset('images/discs/')}}{{disc.picture}}" alt="{{disc.title}}">
+        </div>
+        <ul class="flex-fill list-group">
+            <li class='list-group-item'><h1 class='m-0'>{{disc.title}}</h1></li>
+            <li class="list-group-item"><h3 class='m-0'>{{disc.artist.name}}</h3></li>
+            <li class="list-group-item"><p class='m-0'>{{disc.year}}</p></li>
+            <li class="list-group-item"><p class='m-0'>{{disc.genre}}</p></li>
+            <li class="list-group-item"><p class='m-0'>{{disc.label}}</p></li>
+            <li class="list-group-item"><p class='m-0'>{{disc.price}}</p></li>
+        </ul>
+        <div class="col-md-2 d-flex flex-column gap-2">
+            <a class='btn btn-primary' href="{{ path('app_disc_edit', {'id': disc.id}) }}">Modifier</a>
+            <button class="btn btn-danger" type='button' data-bs-toggle='modal' data-bs-target='#deleteModal'>
+                Supprimer
+            </button>
+        </div>
+        
+        {# deleteModal #}
+        <div class="modal fade" id="deleteModal" tabindex='-1' aria-labelledby='deleteModalLabel' aria-hidden='true'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id='deleteModalLabel'>Supprimer</h3>
+                        <button class="btn-close" type='button' data-bs-dismiss='modal' aria-label='close'></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class='m-0'>Voulez-vous vraiment supprimer {{disc.title}} | {{disc.artist.name}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type='button' data-bs-dismiss='modal'>Annuler</button>
+                        {{ include('disc/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <a href="{{ path('app_disc_index') }}">back to list</a>
 
-    <a href="{{ path('app_disc_edit', {'id': disc.id}) }}">edit</a>
+    </div>
 
-    {{ include('disc/_delete_form.html.twig') }}
 {% endblock %}
