@@ -1,4 +1,25 @@
-<form method="post" action="{{ path('app_disc_delete', {'id': disc.id}) }}">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ disc.id) }}">
-    <button class="btn btn-danger">Supprimer</button>
-</form>
+
+	{# deleteModal #}
+	<div class="modal fade" id="deleteModal" tabindex='-1' aria-labelledby='deleteModalLabel' aria-hidden='true'>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title" id='deleteModalLabel'>Supprimer</h3>
+					<button class="btn-close" type='button' data-bs-dismiss='modal' aria-label='close'></button>
+				</div>
+				<div class="modal-body">
+					<p class='m-0'>Voulez-vous vraiment supprimer
+						{{disc.title}}
+						|
+						{{disc.artist.name}}</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type='button' data-bs-dismiss='modal'>Annuler</button>
+                    <form method="post" action="{{ path('app_disc_delete', {'id': disc.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ disc.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+				</div>
+			</div>
+		</div>
+	</div>
