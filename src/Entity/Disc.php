@@ -2,10 +2,34 @@
 
 namespace App\Entity;
 
-use App\Repository\DiscRepository;
-use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Metadata\Get;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\DiscRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ApiResource(
+    operations:[
+        new Get(),
+        new GetCollection(),
+        new Post(
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            securityMessage: 'Vous devez être connecté pour effectué cette action'
+        ),
+        new Delete(
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            securityMessage: 'Vous devez être connecté pour effectué cette action'
+        ),
+        new Patch(
+            security: "is_granted('IS_AUTHENTICATED_FULLY')",
+            securityMessage: 'Vous devez être connecté pour effectué cette action'
+        )
+        ]
+)]
 #[ORM\Entity(repositoryClass: DiscRepository::class)]
 class Disc
 {

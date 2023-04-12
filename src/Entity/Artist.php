@@ -2,12 +2,38 @@
 
 namespace App\Entity;
 
+use App\Entity\Disc;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArtistRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ApiResource(
+    operations:[
+    new Get(),
+    new GetCollection(),
+    new Post(
+        security: "is_granted('IS_AUTHENTICATED_FULLY)",
+        securityMessage: 'Vous devez être connecté pour effectué cette action'
+    ),
+    new Delete(
+        security: "is_granted('IS_AUTHENTICATED_FULLY')",
+        securityMessage: 'Vous devez être connecté pour effectué cette action'
+    ),
+    new Patch(
+        security: "is_granted('IS_AUTHENTICATED_FULLY')",
+        securityMessage: 'Vous devez être connecté pour effectué cette action'
+    )
+
+]
+)]
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
 class Artist
 {
