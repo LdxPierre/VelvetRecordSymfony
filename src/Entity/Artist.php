@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ArtistRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArtistRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
 class Artist
@@ -15,6 +16,13 @@ class Artist
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(
+        message: 'Veuillez saisir un nom d\'artiste.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z\d &é\-è_çà@âẑêŷûîôŝĝĥĵŵĉ!ÂẐÊŶÛÎÔŜĜĤĴŴĈëẗÿüïöḧẅẍÄËŸÜÏÖḦẄẌ]{1,255}$/',
+        message: 'Le nom d\'artiste contient des caractères invalides.',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 

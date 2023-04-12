@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouvel artiste{% endblock %}
+
+{% block body %}
+<div class="d-flex align-items-center mb-4">
+    <a class='btn btn-primary me-4' href="{{ path('app_artist_index') }}">Retour</a>
+    <h1 class='m-0'>Créer un nouvel artiste</h1>
+</div>
+
+    {{ include('artist/_form.html.twig') }}
+
+{% endblock %}
