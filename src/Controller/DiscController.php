@@ -27,6 +27,8 @@ class DiscController extends AbstractController
     #[Route('/new', name: 'app_disc_new', methods: ['GET', 'POST'])]
     public function new(Request $request, DiscRepository $discRepository, SluggerInterface $slugger): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $disc = new Disc();
         $form = $this->createForm(DiscType::class, $disc);
         $form->handleRequest($request);
@@ -77,6 +79,8 @@ class DiscController extends AbstractController
     #[Route('/{id}/edit', name: 'app_disc_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Disc $disc, DiscRepository $discRepository, SluggerInterface $slugger): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $form = $this->createForm(DiscType::class, $disc);
         $form->handleRequest($request);
 
@@ -118,6 +122,8 @@ class DiscController extends AbstractController
     #[Route('/{id}', name: 'app_disc_delete', methods: ['POST'])]
     public function delete(Request $request, Disc $disc, DiscRepository $discRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         if ($this->isCsrfTokenValid('delete'.$disc->getId(), $request->request->get('_token'))) {
             //supprime l'ancienne image
             $filesystem = new Filesystem();

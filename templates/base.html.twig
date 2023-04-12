@@ -33,12 +33,18 @@
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded='false'>Utilisateur</button>
 						<ul class="dropdown-menu dropdown-menu-end text-end">
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 							<li>
-								<a class="dropdown-item" href="#">Se connecter</a>
+								<a class="dropdown-item" href="{{path('app_logout')}}">Se déconnecter</a>
+							</li>
+							{% else %}
+							<li>
+								<a class="dropdown-item" href="{{path('app_login')}}">Se connecter</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="#">S'inscrire</a>
+								<a class="dropdown-item" href="{{path('app_register')}}">S'inscrire</a>
 							</li>
+							{% endif %}
 						</ul>
 					</div>
 					<div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="navAside" aria-labelledby="offcanvasLabel">

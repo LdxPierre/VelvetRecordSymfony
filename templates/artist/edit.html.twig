@@ -5,7 +5,7 @@
 {% block body %}
 <div class="d-flex align-items-center mb-4">
     <a class='btn btn-primary me-4' href="{{ path('app_artist_index') }}">Retour</a>
-    <h1 class=''m-0>Modifier {{artist.name}}</h1>
+    <h1 class='m-0'>Modifier {{artist.name}}</h1>
 </div>
 
 {{ include('artist/_form.html.twig', {'button_label': 'Mettre à jour'}) }}

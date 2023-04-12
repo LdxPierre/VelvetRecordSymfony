@@ -6,9 +6,11 @@
 {% block body %}
 	<div class="mb-4 d-flex align-items-center justify-content-between gap-4">
 		<h1>Disques</h1>
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 		<div>
 			<a class='btn btn-primary' href="{{path('app_disc_new')}}">Nouveau disque</a>
 		</div>
+		{% endif %}
 	</div>
 
 	<section class="row row-cols-3 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-1 g-sm-2 g-md-4">

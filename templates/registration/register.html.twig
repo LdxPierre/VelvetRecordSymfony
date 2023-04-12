@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block body %}
+    <div class="col-12 col-md-6 mx-auto">
+        <h1>Créer un compte</h1>
+
+        {{ form_start(registrationForm, {'attr': {'novalidate':'novalidate'}}) }}
+            {{ form_row(registrationForm.email, {'label':'Adresse E-mail'}) }}
+            {{ form_row(registrationForm.plainPassword.first, {label: 'Mot de Passe'}) }}
+            {{ form_row(registrationForm.plainPassword.second, {label: 'Confirmer le Mot de Passe'}) }}
+            {{ form_row(registrationForm.agreeTerms, {'label':'Accepter les termes d\'utilisation'}) }}
+
+            <button class='btn btn-success' type="submit" class="btn">S'inscrire</button>
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}
