@@ -2,33 +2,21 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\Get;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DiscRepository;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Post;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
-    operations:[
-        new Get(),
+    operations: [
         new GetCollection(),
-        new Post(
-            security: "is_granted('IS_AUTHENTICATED_FULLY')",
-            securityMessage: 'Vous devez être connecté pour effectué cette action'
-        ),
-        new Delete(
-            security: "is_granted('IS_AUTHENTICATED_FULLY')",
-            securityMessage: 'Vous devez être connecté pour effectué cette action'
-        ),
-        new Patch(
-            security: "is_granted('IS_AUTHENTICATED_FULLY')",
-            securityMessage: 'Vous devez être connecté pour effectué cette action'
-        )
-        ]
+    ]
+)]
+#[ApiFilter(
+    SearchFilter::class, properties:['title'=>'partial']
 )]
 #[ORM\Entity(repositoryClass: DiscRepository::class)]
 class Disc
@@ -40,13 +28,13 @@ class Disc
 
     #[Assert\NotBlank(
         message: 'Veuillez saisir un titre.',
-        )]
+    )]
     #[Assert\Length(
         min: 2,
         max: 50,
         minMessage: 'Le titre doit comporter entre 1 et 50 caractères.',
         maxMessage: 'Le titre doit comporter entre 1 et 50 caractères.',
-        )]
+    )]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z\d &é\-èçà@+=%?,!]{1,50}$/',
         message: 'Le titre contient des caractères invalides.',
@@ -75,10 +63,10 @@ class Disc
 
     #[Assert\NotBlank(
         message: 'Veuillez saisir un label.',
-        )]
+    )]
     #[Assert\Length(
-        min:2,
-        max:50,
+        min: 2,
+        max: 50,
         minMessage: 'Le label doit comporter entre 2 et 4 caractères.',
         maxMessage: 'Le label doit comporter entre 2 et 4 caractères.',
     )]
@@ -91,10 +79,10 @@ class Disc
 
     #[Assert\NotBlank(
         message: 'Veuillez saisir un genre.',
-        )]
+    )]
     #[Assert\Length(
-        min:2,
-        max:50,
+        min: 2,
+        max: 50,
         minMessage: 'Le genre doit comporter entre 2 et 4 caractères.',
         maxMessage: 'Le genre doit comporter entre 2 et 4 caractères.',
     )]
@@ -107,7 +95,7 @@ class Disc
 
     #[Assert\NotBlank(
         message: 'Veuillez saisir un prix.',
-        )]
+    )]
     #[ORM\Column]
     #[Assert\Type(
         type: 'int',
