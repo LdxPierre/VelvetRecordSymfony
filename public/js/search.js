@@ -21,7 +21,7 @@ async function showResult(){
     if (searchElement.value){
         resultat.forEach(element => {
             const aElement = document.createElement('a');
-            aElement.classList.add('list-group-item', 'list-group-item-action');
+            aElement.classList.add('list-group-item', 'list-group-item-action', 'resultLink');
             aElement.setAttribute('href', window.location.origin+'/disc/'+element.id)
             aElement.innerHTML = `${element.title}`;
             list.appendChild(aElement);
@@ -30,15 +30,19 @@ async function showResult(){
     }
 }
 
+//affiche la liste lors de la saisie
 searchElement.addEventListener('input',()=>{
     showResult();
 })
 
-searchElement.addEventListener('blur', (event)=>{
-    if (!event.relatedTarget.parentElement.classList.contains('searchList')) {
-        list.classList.contains('d-block') ? list.classList.replace('d-block', 'd-none') : null;
-}})
+//retire la liste si click en dehors
+window.addEventListener('click', ()=>{
+    if (list.classList.contains('d-block')) {
+        list.classList.replace('d-block', 'd-none');
+    }
+})
 
+//Retire la liste si la touche escape
 searchElement.addEventListener('keydown', (event)=>{
     if (event.key == 'Escape') {
         list.classList.contains('d-block') ? list.classList.replace('d-block', 'd-none') : null;
